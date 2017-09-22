@@ -2,15 +2,19 @@ import XCTest
 @testable import SAT
 
 class SATTests: XCTestCase {
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct
-        // results.
-        XCTAssertEqual(SAT().text, "Hello, World!")
+    func testTriviallySatisfiable() {
+        do {
+            let formula = try DIMACSReader().read("""
+            p cnf 4 4
+            1 0
+            2 0
+            3 0
+            4 0
+            """)
+
+            XCTAssert(formula.isSatisfiable())
+        } catch {
+            XCTFail("\(error)")
+        }
     }
-
-
-    static var allTests = [
-        ("testExample", testExample),
-    ]
 }

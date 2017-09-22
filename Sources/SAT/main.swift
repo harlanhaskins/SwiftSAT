@@ -22,6 +22,14 @@ func usage() -> Never {
     exit(-1)
 }
 
+func time<T>(_ f: () throws -> T) rethrows -> (UInt64, T) {
+    let start = DispatchTime.now()
+    let v = try f()
+    let end = DispatchTime.now()
+    let milliseconds = (end.uptimeNanoseconds - start.uptimeNanoseconds) / NSEC_PER_MSEC
+    return (milliseconds, v)
+}
+
 func main() throws {
     guard CommandLine.arguments.count > 1 else {
         usage()
@@ -29,13 +37,13 @@ func main() throws {
 
     let reader = DIMACSReader()
 
-    let formula = try reader.read(filename: CommandLine.arguments[1])
-    let start = DispatchTime.now()
-    let isSat = formula.isSatisfiable()
-    let end = DispatchTime.now()
+    let (parseTime, formula) = try time {
+        try reader.read(filename: CommandLine.arguments[1])
+    }
+    let (solveTime, isSat) = time { formula.isSatisfiable() }
 
-    let milliseconds = (end.uptimeNanoseconds - start.uptimeNanoseconds) / NSEC_PER_MSEC
-    print("Elapsed time: \(milliseconds)ms")
+    print("Parse time: \(parseTime)ms")
+    print("Solving time: \(solveTime)ms")
 
     print(isSat ? "SATISFIABLE" : "UNSATISFIABLE")
 }

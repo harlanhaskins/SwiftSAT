@@ -17,9 +17,13 @@ struct DIMACSReader {
 
     /// Reads the DIMACS file at the provided filename into a CNF formula.
     func read(filename: String) throws -> CNF {
-        let lines = try String(contentsOf: URL(fileURLWithPath: filename),
-                               encoding: .utf8).split(separator: "\n")
-        return try read(lines: lines)
+        let string = try String(contentsOf: URL(fileURLWithPath: filename),
+                                encoding: .utf8)
+        return try read(string)
+    }
+
+    func read(_ string: String) throws -> CNF {
+        return try read(lines: string.split(separator: "\n"))
     }
 
     private func read(line: Substring) throws -> Clause {
