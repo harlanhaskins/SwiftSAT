@@ -12,9 +12,10 @@ iteratively reduce the clauses in the formula until converging on a formula
 that is trivially either satisfiable or unsatisfiable.
 
 The problem of boolean satisfiability is an NP-Complete problem, meaning that:
-  - It is unknown if there are any polynomial-time (O(n^c) or smaller)
-    algorithms that can solve this problem.
-  - All other P or NP problems can be reduced to this problem.
+  - **It belongs to NP**: its solutions can be checked in polynomial time.
+  - **It's NP-Hard**: all other NP problems can be reduced to this problem in polynomial time.
+
+As with all other NP-Complete problems, it is unknown if there are any polynomial-time (O(n^c) or smaller) algorithms that can solve this problem.
 
 # Author
 
