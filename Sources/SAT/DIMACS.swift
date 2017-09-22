@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftScanner
 
 /// A namespace for DIMACS-related functions.
 struct DIMACSReader {
