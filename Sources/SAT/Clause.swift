@@ -84,7 +84,7 @@ struct Clause {
         if found.isNegative == variable.isNegative {
             return variables.count == 1 ? .clauseUnchanged : .clauseObviated
         }
-        variables.remove(variable)
+        variables.remove(found)
         return .removedVariable
     }
 
